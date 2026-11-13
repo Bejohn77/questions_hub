@@ -5449,3 +5449,129 @@ body {
     max-width: calc(100vw - 24px);
   }
 }
+
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) {
+  --ink: #e0e9e7;
+  --ink-soft: #c0cfcb;
+  --muted: #9eafab;
+  --on-accent: #103632;
+  --primary: #67b9ae;
+  --primary-foreground: #e0e9e7;
+  --topbar-selected-foreground: #e0e9e7;
+  --secondary: #82c9bf;
+  --accent: #82c9bf;
+  --surface: rgb(18 49 46 / 82%);
+  --surface-muted: rgb(19 55 51 / 88%);
+  --border: rgb(151 183 176 / 28%);
+  --border-strong: rgb(151 183 176 / 42%);
+  --primary-soft: rgb(75 143 133 / 20%);
+  --primary-border: rgb(151 183 176 / 35%);
+  --sidebar: rgb(16 47 44 / 82%);
+  --sidebar-hover: rgb(75 143 133 / 24%);
+  --sidebar-active: #286f68;
+  --sidebar-text: #dce7e4;
+  --sidebar-muted: #b6c7c3;
+  --sidebar-border: rgb(151 183 176 / 24%);
+  color: var(--ink);
+  background-color: var(--canvas);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(h1, h2, h3, h4, strong) {
+  color: #dce7e4;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(p, small, li, label) {
+  color: #b6c7c3;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .topbar {
+  border-color: rgb(151 183 176 / 24%);
+  background-color: rgb(16 47 44 / 82%);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .topbar :is(.topbar-brand-copy strong, .topbar-brand-copy span, .account-menu > summary, .account-menu-name) {
+  color: #dce7e4;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .top-navigation :is(a, button) {
+  color: #b6c7c3;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .top-navigation :is(a:hover, button:hover, a.active, button.active) {
+  color: #a1ddd2;
+  background: rgb(75 143 133 / 24%);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-sidebar {
+  border-color: rgb(151 183 176 / 28%);
+  background-color: rgb(16 47 44 / 68%);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-sidebar :is(a, button) {
+  color: #b6c7c3;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-sidebar :is(a:hover, button:hover, a.active, button.active) {
+  border-color: rgb(151 183 176 / 32%);
+  color: #a1ddd2;
+  background: rgb(75 143 133 / 24%);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(.admin-dashboard-heading, .admin-dashboard-panel, .admin-dashboard-stat, .admin-dashboard-action, .admin-dashboard-list, .admin-dashboard-table-wrap, .question-upload, .question-upload-card, .csv-summary, .admin-csv-upload) {
+  border-color: rgb(151 183 176 / 28%);
+  background-color: rgb(16 47 44 / 68%);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-table :is(th, td) {
+  border-color: rgb(151 183 176 / 20%);
+  color: #b6c7c3;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-table th {
+  color: #dce7e4;
+  background: rgb(75 143 133 / 24%);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(input, select, textarea) {
+  border-color: rgb(151 183 176 / 34%);
+  color: #dce7e4;
+  background-color: rgb(12 39 36 / 88%);
+  caret-color: #a1ddd2;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(input, textarea)::placeholder {
+  color: #9eafab;
+  opacity: 1;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) select option {
+  color: #dce7e4;
+  background: #102b28;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(input, select, textarea):hover:not(:disabled) {
+  border-color: #82c9bf;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .button.primary {
+  border-color: #438c82;
+  color: #e4efec;
+  background: #286f68;
+  box-shadow: 0 8px 23px rgb(3 23 21 / 30%), inset 0 1px 0 rgb(255 255 255 / 10%);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .button.primary:hover:not(:disabled) {
+  border-color: #82c9bf;
+  color: #103632;
+  background: #82c9bf;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-refresh {
+  border-color: #438c82;
+  color: #e4efec;
+  background: #286f68;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-refresh:hover:not(:disabled) {
+  border-color: #82c9bf;
+  color: #103632;
+  background: #82c9bf;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-kicker,
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-heading .eyebrow {
+  color: #8bcfc3;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .question-upload-warning {
+  color: var(--warning);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .account-menu-content {
+  border-color: rgb(151 183 176 / 32%);
+  color: #c0cfcb;
+  background: rgb(16 45 42 / 96%);
+  box-shadow: 0 18px 42px rgb(3 23 21 / 38%), inset 0 1px 0 rgb(255 255 255 / 8%);
+  -webkit-backdrop-filter: blur(26px) saturate(155%);
+  backdrop-filter: blur(26px) saturate(155%);
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .account-menu-action {
+  color: #c0cfcb;
+}

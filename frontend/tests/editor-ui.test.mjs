@@ -837,8 +837,8 @@ test("admin dashboard uses the verified session on login, direct navigation, ref
   await page.getByRole("button", { name: "ডার্ক মোড" }).click();
   await page.waitForFunction(() => document.documentElement.dataset.theme === "dark");
   assert.notEqual(await page.locator(".admin-dashboard-stat").first().evaluate((element) => getComputedStyle(element).backgroundImage), "none");
-  assert.equal(await page.locator(".admin-dashboard-stat strong").first().evaluate((element) => getComputedStyle(element).color), "rgb(232, 245, 241)");
-  assert.ok(contrastRatio("#e8f5f1", "#123934") >= 4.5);
+  assert.equal(await page.locator(".admin-dashboard-stat strong").first().evaluate((element) => getComputedStyle(element).color), "rgb(220, 231, 228)");
+  assert.ok(contrastRatio("#dce7e4", "#102f2c") >= 4.5);
   assert.equal(requests.filter(({ path }) => path === "/api/auth/me").length, 1,
     "the verified session should initialize the dashboard without a second /me request");
   assert.ok(requests.some(({ path }) => path === "/api/admin/questions/dashboard"),
@@ -1082,6 +1082,30 @@ test("admin dashboard presents database metrics, activity, shortcuts, and respon
     assert.equal(await page.locator("#admin-dashboard").isVisible(), true);
   }
   assert.ok(widths.every(({ viewport, content }) => content <= viewport), JSON.stringify(widths));
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  const lightInk = await page.locator(".app-shell").evaluate((element) => getComputedStyle(element).getPropertyValue("--ink").trim());
+  assert.equal(lightInk, "#164e49");
+  await page.getByRole("button", { name: "ডার্ক মোড" }).click();
+  await page.waitForFunction(() => document.documentElement.dataset.theme === "dark");
+  const darkColors = await page.locator(".app-shell").evaluate((element) => {
+    const styles = getComputedStyle(element);
+    return {
+      ink: styles.getPropertyValue("--ink").trim(),
+      surface: styles.getPropertyValue("--surface").trim(),
+      panel: getComputedStyle(element.querySelector(".admin-dashboard-panel")).backgroundColor,
+      heading: getComputedStyle(element.querySelector(".admin-dashboard-panel h3")).color,
+      body: getComputedStyle(element.querySelector(".admin-dashboard-welcome p:last-child")).color,
+      navigation: getComputedStyle(element.querySelector(".topbar")).backgroundColor,
+    };
+  });
+  assert.equal(darkColors.ink, "#e0e9e7");
+  assert.equal(darkColors.surface, "#12312ed1");
+  assert.equal(darkColors.panel, "rgba(16, 47, 44, 0.68)");
+  assert.equal(darkColors.heading, "rgb(220, 231, 228)");
+  assert.equal(darkColors.body, "rgb(182, 199, 195)");
+  assert.equal(darkColors.navigation, "rgba(16, 47, 44, 0.82)");
+  assert.ok(contrastRatio("#b6c7c3", "#102b28") >= 4.5);
 });
 
 test("overlapping admin dashboard loads share one in-flight API request", async (t) => {

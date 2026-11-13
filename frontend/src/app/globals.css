@@ -5451,29 +5451,35 @@ body {
 }
 
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) {
-  --ink: #e0e9e7;
-  --ink-soft: #c0cfcb;
-  --muted: #9eafab;
+  --ink: #dce7e4;
+  --ink-soft: #b6c7c3;
+  --muted: #94aaa5;
   --on-accent: #103632;
-  --primary: #67b9ae;
-  --primary-foreground: #e0e9e7;
-  --topbar-selected-foreground: #e0e9e7;
-  --secondary: #82c9bf;
-  --accent: #82c9bf;
-  --surface: rgb(18 49 46 / 82%);
-  --surface-muted: rgb(19 55 51 / 88%);
-  --border: rgb(151 183 176 / 28%);
-  --border-strong: rgb(151 183 176 / 42%);
-  --primary-soft: rgb(75 143 133 / 20%);
-  --primary-border: rgb(151 183 176 / 35%);
-  --sidebar: rgb(16 47 44 / 82%);
-  --sidebar-hover: rgb(75 143 133 / 24%);
+  --primary: #4a9b91;
+  --primary-foreground: #dce7e4;
+  --topbar-selected-foreground: #dce7e4;
+  --secondary: #69b5aa;
+  --accent: #286f68;
+  --surface: #153a36;
+  --surface-muted: #102f2c;
+  --border: #315752;
+  --border-strong: #47716a;
+  --primary-soft: #193f3a;
+  --primary-border: #47716a;
+  --sidebar: #102b28;
+  --sidebar-hover: #245c55;
   --sidebar-active: #286f68;
   --sidebar-text: #dce7e4;
   --sidebar-muted: #b6c7c3;
-  --sidebar-border: rgb(151 183 176 / 24%);
+  --sidebar-border: #315752;
   color: var(--ink);
   background-color: var(--canvas);
+  background-image: none;
+}
+:root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(.workspace, .work-area, .editor-pane) {
+  color: #dce7e4;
+  background-color: #102b28;
+  background-image: none;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(h1, h2, h3, h4, strong) {
   color: #dce7e4;
@@ -5482,59 +5488,63 @@ body {
   color: #b6c7c3;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .topbar {
-  border-color: rgb(151 183 176 / 24%);
-  background-color: rgb(16 47 44 / 82%);
+  border-color: #315752;
+  background-color: #123b36;
+  background-image: none;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .topbar :is(.topbar-brand-copy strong, .topbar-brand-copy span, .account-menu > summary, .account-menu-name) {
   color: #dce7e4;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .top-navigation :is(a, button) {
-  color: #b6c7c3;
+  color: #c0cfcb;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .top-navigation :is(a:hover, button:hover, a.active, button.active) {
-  color: #a1ddd2;
-  background: rgb(75 143 133 / 24%);
+  color: #dce7e4;
+  background: #245c55;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-sidebar {
-  border-color: rgb(151 183 176 / 28%);
-  background-color: rgb(16 47 44 / 68%);
+  border-color: #315752;
+  background-color: #102b28;
+  background-image: none;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-sidebar :is(a, button) {
   color: #b6c7c3;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-sidebar :is(a:hover, button:hover, a.active, button.active) {
-  border-color: rgb(151 183 176 / 32%);
-  color: #a1ddd2;
-  background: rgb(75 143 133 / 24%);
+  border-color: #47716a;
+  color: #dce7e4;
+  background: #245c55;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(.admin-dashboard-heading, .admin-dashboard-panel, .admin-dashboard-stat, .admin-dashboard-action, .admin-dashboard-list, .admin-dashboard-table-wrap, .question-upload, .question-upload-card, .csv-summary, .admin-csv-upload) {
-  border-color: rgb(151 183 176 / 28%);
-  background-color: rgb(16 47 44 / 68%);
+  border-color: #315752;
+  background-color: #153a36;
+  background-image: none;
+  box-shadow: 0 8px 24px rgb(3 23 21 / 24%), inset 0 1px 0 rgb(255 255 255 / 5%);
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-table :is(th, td) {
-  border-color: rgb(151 183 176 / 20%);
+  border-color: #315752;
   color: #b6c7c3;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-table th {
   color: #dce7e4;
-  background: rgb(75 143 133 / 24%);
+  background: #102f2c;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(input, select, textarea) {
-  border-color: rgb(151 183 176 / 34%);
+  border-color: #3b625c;
   color: #dce7e4;
-  background-color: rgb(12 39 36 / 88%);
-  caret-color: #a1ddd2;
+  background-color: #0d2926;
+  caret-color: #82c9bf;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(input, textarea)::placeholder {
-  color: #9eafab;
+  color: #94aaa5;
   opacity: 1;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) select option {
   color: #dce7e4;
-  background: #102b28;
+  background: #102f2c;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) :is(input, select, textarea):hover:not(:disabled) {
-  border-color: #82c9bf;
+  border-color: #69b5aa;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .button.primary {
   border-color: #438c82;
@@ -5559,18 +5569,16 @@ body {
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-kicker,
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .admin-dashboard-heading .eyebrow {
-  color: #8bcfc3;
+  color: #82c9bf;
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .question-upload-warning {
   color: var(--warning);
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .account-menu-content {
-  border-color: rgb(151 183 176 / 32%);
+  border-color: #315752;
   color: #c0cfcb;
-  background: rgb(16 45 42 / 96%);
-  box-shadow: 0 18px 42px rgb(3 23 21 / 38%), inset 0 1px 0 rgb(255 255 255 / 8%);
-  -webkit-backdrop-filter: blur(26px) saturate(155%);
-  backdrop-filter: blur(26px) saturate(155%);
+  background: #102f2c;
+  box-shadow: 0 18px 42px rgb(3 23 21 / 38%), inset 0 1px 0 rgb(255 255 255 / 6%);
 }
 :root[data-theme="dark"] .app-shell:not(.user-panel-shell):not(.user-panel-creating) .account-menu-action {
   color: #c0cfcb;

@@ -836,7 +836,7 @@ test("admin dashboard uses the verified session on login, direct navigation, ref
   await page.locator(".admin-dashboard-stat strong").first().waitFor();
   await page.getByRole("button", { name: "ডার্ক মোড" }).click();
   await page.waitForFunction(() => document.documentElement.dataset.theme === "dark");
-  assert.notEqual(await page.locator(".admin-dashboard-stat").first().evaluate((element) => getComputedStyle(element).backgroundImage), "none");
+  assert.equal(await page.locator(".admin-dashboard-stat").first().evaluate((element) => getComputedStyle(element).backgroundColor), "rgb(21, 58, 54)");
   assert.equal(await page.locator(".admin-dashboard-stat strong").first().evaluate((element) => getComputedStyle(element).color), "rgb(220, 231, 228)");
   assert.ok(contrastRatio("#dce7e4", "#102f2c") >= 4.5);
   assert.equal(requests.filter(({ path }) => path === "/api/auth/me").length, 1,
@@ -1099,13 +1099,15 @@ test("admin dashboard presents database metrics, activity, shortcuts, and respon
       navigation: getComputedStyle(element.querySelector(".topbar")).backgroundColor,
     };
   });
-  assert.equal(darkColors.ink, "#e0e9e7");
-  assert.equal(darkColors.surface, "#12312ed1");
-  assert.equal(darkColors.panel, "rgba(16, 47, 44, 0.68)");
+  assert.equal(darkColors.ink, "#dce7e4");
+  assert.equal(darkColors.surface, "#153a36");
+  assert.equal(darkColors.panel, "rgb(21, 58, 54)");
   assert.equal(darkColors.heading, "rgb(220, 231, 228)");
   assert.equal(darkColors.body, "rgb(182, 199, 195)");
-  assert.equal(darkColors.navigation, "rgba(16, 47, 44, 0.82)");
+  assert.equal(darkColors.navigation, "rgb(18, 59, 54)");
   assert.ok(contrastRatio("#b6c7c3", "#102b28") >= 4.5);
+  assert.ok(contrastRatio("#b6c7c3", "#153a36") >= 4.5);
+  assert.ok(contrastRatio("#94aaa5", "#153a36") >= 4.5);
 });
 
 test("overlapping admin dashboard loads share one in-flight API request", async (t) => {

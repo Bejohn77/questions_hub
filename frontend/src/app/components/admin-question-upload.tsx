@@ -19,7 +19,8 @@ type QuestionDraft = {
 };
 
 const maximumFiles = 5;
-const maximumFileBytes = 8 * 1024 * 1024;
+const maximumFileBytes = 20 * 1024 * 1024;
+const maximumRequestBytes = 50 * 1024 * 1024;
 const acceptedExtensions = /\.(pdf|docx)$/i;
 const maximumQuestions = 1000;
 
@@ -127,11 +128,11 @@ export default function AdminQuestionUpload({
       return;
     }
     if (selection.some((file) => file.size === 0 || file.size > maximumFileBytes)) {
-      setError("প্রতিটি ফাইল ১ byte থেকে ৮ MB-এর মধ্যে হতে হবে।");
+      setError("প্রতিটি ফাইল ১ byte থেকে ২০ MB-এর মধ্যে হতে হবে।");
       return;
     }
-    if (selection.reduce((total, file) => total + file.size, 0) > 20 * 1024 * 1024) {
-      setError("সব ফাইলের মোট আকার ২০ MB-এর বেশি হতে পারবে না।");
+    if (selection.reduce((total, file) => total + file.size, 0) > maximumRequestBytes) {
+      setError("সব ফাইলের মোট আকার ৫০ MB-এর বেশি হতে পারবে না।");
       return;
     }
     setError("");
@@ -278,7 +279,7 @@ export default function AdminQuestionUpload({
         </div>
         <div className="question-upload-file">
           <strong>৩ · টেক্সট-ভিত্তিক PDF / DOCX ফাইল</strong>
-          <p>সর্বোচ্চ ৫টি ফাইল; প্রতিটি সর্বোচ্চ ৮ MB, মোট ২০ MB। স্ক্যান করা PDF সমর্থিত নয়। OCR ব্যবহার করা হয় না।</p>
+          <p>সর্বোচ্চ ৫টি ফাইল; প্রতিটি সর্বোচ্চ ২০ MB, মোট ৫০ MB। স্ক্যান করা PDF সমর্থিত নয়। OCR ব্যবহার করা হয় না।</p>
           <label className="button file-upload">
             <Upload size={15} />{files.length ? `${files.length}টি ফাইল নির্বাচিত` : "ফাইল বাছুন"}
             <input ref={inputRef} type="file" multiple accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled={isExtracting || isSaving} onChange={(event) => chooseFiles(event.currentTarget.files)} />

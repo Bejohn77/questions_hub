@@ -16,8 +16,8 @@ import {
 import { questionFingerprint, questionSchema } from "./routes/questions";
 
 const maximumFiles = 5;
-const maximumFileBytes = 8 * 1024 * 1024;
-const maximumRequestBytes = 20 * 1024 * 1024;
+const maximumFileBytes = 20 * 1024 * 1024;
+const maximumRequestBytes = 50 * 1024 * 1024;
 const maximumQuestions = 1000;
 const maximumImages = 2000;
 const maximumExtractedImageBytes = 50 * 1024 * 1024;
@@ -191,7 +191,7 @@ export function registerAdminQuestionUploadRoutes(router: Router) {
       return;
     }
     if (files.reduce((total, file) => total + file.size, 0) > maximumRequestBytes) {
-      response.status(413).json({ error: "The combined upload size cannot exceed 20 MB." });
+      response.status(413).json({ error: "The combined upload size cannot exceed 50 MB." });
       return;
     }
 

@@ -1,0 +1,255 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+}
+
+enum QuestionType {
+  MCQ
+  CQ
+  SHORT
+  CREATIVE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+enum TokenTransactionType {
+  CHARGE
+  GRANT
+}
+
+enum AcademicEntryType {
+  CLASS
+  GROUP
+  SUBJECT
+  CHAPTER
+  TOPIC
+  DIVISION
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  passwordHash String
+  role         Role          @default(TEACHER)
+  mustChangePassword Boolean @default(false)
+  tokenBalance Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  questions    Question[]    @relation("QuestionAuthor")
+  papers       Paper[]       @relation("PaperOwner")
+  sessions     AuthSession[]
+  passwordResetTokens PasswordResetToken[]
+  subscription Subscription?
+  payments     PaymentEvent[]
+  tokenTransactions TokenTransaction[] @relation("TokenOwner")
+  administeredTokenTransactions TokenTransaction[] @relation("TokenAdmin")
+  questionImports QuestionImport[]
+  adminActivities AdminActivity[]
+  questionImages QuestionImage[]
+}
+
+model AuthSession {
+  id        String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@unique([userId])
+  @@index([expiresAt])
+}
+
+model Question {
+  id         String       @id @default(cuid())
+  authorId   String
+  author     User         @relation("QuestionAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  type       QuestionType
+  classLevel String
+  group      String
+  subject    String
+  chapter    String
+  topic      String
+  marks      Int
+  content    Json
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  paperItems PaperItem[]
+  images QuestionImage[]
+  tokenTransaction TokenTransaction?
+
+  @@index([authorId, subject, chapter])
+  @@index([classLevel, group, subject, chapter, topic])
+}
+
+model QuestionImage {
+  id               String   @id @default(cuid())
+  ownerId          String
+  owner            User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  questionId       String?
+  question         Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  originalFilename String
+  mimeType         String
+  data             Bytes    @db.ByteA
+  size             Int
+  createdAt        DateTime @default(now())
+
+  @@index([ownerId, createdAt])
+  @@index([questionId])
+}
+
+model QuestionImport {
+  id             String   @id @default(cuid())
+  adminId        String
+  admin          User     @relation(fields: [adminId], references: [id], onDelete: Restrict)
+  filename       String
+  questionType   QuestionType
+  status         String   @default("PROCESSING")
+  totalRows      Int      @default(0)
+  importedRows   Int      @default(0)
+  failedRows     Int      @default(0)
+  duplicateRows  Int      @default(0)
+  errorSummary   Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([adminId, createdAt])
+  @@index([status, createdAt])
+}
+
+model AdminActivity {
+  id         String   @id @default(cuid())
+  adminId    String
+  admin      User     @relation(fields: [adminId], references: [id], onDelete: Restrict)
+  action     String
+  entityType String
+  entityId   String?
+  details    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([adminId, createdAt])
+}
+
+model AcademicEntry {
+  id        String            @id @default(cuid())
+  type      AcademicEntryType
+  name      String
+  parentId  String?
+  parent    AcademicEntry?    @relation("AcademicEntryTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children  AcademicEntry[]   @relation("AcademicEntryTree")
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@unique([type, name, parentId])
+  @@index([type, parentId, name])
+}
+
+model Paper {
+  id        String      @id @default(cuid())
+  ownerId   String
+  owner     User        @relation("PaperOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  title     String
+  settings  Json
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  items     PaperItem[]
+  tokenTransaction TokenTransaction?
+
+  @@index([ownerId, updatedAt])
+}
+
+model PaperItem {
+  id         String   @id @default(cuid())
+  paperId    String
+  paper      Paper    @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  position   Int
+
+  @@unique([paperId, position])
+  @@index([questionId])
+}
+
+model TokenTransaction {
+  id             String                @id @default(cuid())
+  userId         String
+  user           User                  @relation("TokenOwner", fields: [userId], references: [id], onDelete: Cascade)
+  administeredBy String?
+  admin          User?                 @relation("TokenAdmin", fields: [administeredBy], references: [id], onDelete: SetNull)
+  paperId        String?               @unique
+  paper          Paper?                @relation(fields: [paperId], references: [id], onDelete: SetNull)
+  questionId     String?               @unique
+  question       Question?             @relation(fields: [questionId], references: [id], onDelete: SetNull)
+  type           TokenTransactionType
+  amount         Int
+  idempotencyKey String                @unique
+  requestHash    String?
+  createdAt      DateTime              @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model SubscriptionPlan {
+  id            String         @id @default(cuid())
+  code          String         @unique
+  name          String
+  priceMinor    Int
+  currency      String         @default("BDT")
+  durationDays  Int
+  active        Boolean        @default(true)
+  subscriptions Subscription[]
+  payments      PaymentEvent[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Subscription {
+  id        String             @id @default(cuid())
+  userId    String             @unique
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId    String
+  plan      SubscriptionPlan   @relation(fields: [planId], references: [id], onDelete: Restrict)
+  status    SubscriptionStatus @default(ACTIVE)
+  startsAt  DateTime
+  endsAt    DateTime
+  updatedAt DateTime           @updatedAt
+}
+
+model PaymentEvent {
+  id                String           @id @default(cuid())
+  providerReference String           @unique
+  userId            String
+  user              User             @relation(fields: [userId], references: [id], onDelete: Restrict)
+  planId            String
+  plan              SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Restrict)
+  amountMinor       Int
+  currency          String
+  status            String           @default("PAID")
+  receivedAt        DateTime         @default(now())
+}

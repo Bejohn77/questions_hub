@@ -1,0 +1,14 @@
+{
+  "name": "bengali-paper-maker",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm run build --prefix frontend && npm run build --prefix backend",
+    "lint": "npm run lint --prefix frontend && npm run lint --prefix backend",
+    "typecheck": "npm run typecheck --prefix frontend && npm run typecheck --prefix backend",
+    "test": "npm run test --prefix backend && npm run test:ui --prefix frontend",
+    "db:deploy": "npm run db:deploy --prefix backend",
+    "db:seed": "npm run db:seed --prefix backend"
+  }
+}

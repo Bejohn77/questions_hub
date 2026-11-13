@@ -1,0 +1,27 @@
+stages: [validate]
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths: [.npm/]
+
+validate:
+  stage: validate
+  image: mcr.microsoft.com/playwright:v1.64.1-noble
+  variables:
+    API_ORIGIN: "https://127.0.0.1:4000"
+  script:
+    - cd frontend
+    - npm ci --cache ../.npm --prefer-offline
+    - npm run lint
+    - npm run typecheck
+    - npm run build
+    - npm run test:ui
+    - cd ../backend
+    - npm ci --cache ../.npm --prefer-offline
+    - npm run lint
+    - npm run typecheck
+    - npm run build
+    - npm test

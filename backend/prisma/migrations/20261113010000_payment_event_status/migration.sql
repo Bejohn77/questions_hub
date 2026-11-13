@@ -1,0 +1,2 @@
+ALTER TABLE "PaymentEvent"
+ADD COLUMN "status" TEXT NOT NULL DEFAULT 'PAID';
